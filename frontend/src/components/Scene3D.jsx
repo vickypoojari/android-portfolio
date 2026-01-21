@@ -1,11 +1,12 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera } from '@react-three/drei';
 import DeveloperFigure from './DeveloperFigure';
 
 const Scene3D = ({ scrollProgress, sectionIndex }) => {
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
     // Check for reduced motion preference
@@ -19,11 +20,17 @@ const Scene3D = ({ scrollProgress, sectionIndex }) => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    return () => window.removeEventListener('resize', checkMobile);
+    // Set ready after a short delay to ensure DOM is ready
+    const timer = setTimeout(() => setIsReady(true), 100);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      clearTimeout(timer);
+    };
   }, []);
   
   // Don't render 3D on mobile or if reduced motion is preferred
-  if (isMobile || isReducedMotion) {
+  if (isMobile || isReducedMotion || !isReady) {
     return null;
   }
   
@@ -37,6 +44,9 @@ const Scene3D = ({ scrollProgress, sectionIndex }) => {
           alpha: true,
           powerPreference: 'high-performance'
         }}
+        onCreated={(state) => {
+          state.gl.setClearColor('#0a0a0a', 0);
+        }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
         
@@ -46,7 +56,6 @@ const Scene3D = ({ scrollProgress, sectionIndex }) => {
           position={[5, 5, 5]}
           intensity={0.8}
           castShadow
-          shadow-mapSize={[1024, 1024]}
         />
         <directionalLight
           position={[-5, 3, -5]}
@@ -61,14 +70,6 @@ const Scene3D = ({ scrollProgress, sectionIndex }) => {
             sectionIndex={sectionIndex}
           />
         </Suspense>
-        
-        {/* Disabled OrbitControls - no camera interaction */}
-        <OrbitControls 
-          enabled={false}
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
       </Canvas>
     </div>
   );
