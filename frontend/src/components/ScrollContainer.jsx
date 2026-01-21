@@ -4,11 +4,15 @@ import Scene3D from './Scene3D';
 
 const ScrollContainer = ({ children }) => {
   const [currentSection, setCurrentSection] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const { scrollYProgress } = useScroll();
   
   // Calculate current section based on scroll position
   useEffect(() => {
+    if (!scrollYProgress) return;
+    
     const unsubscribe = scrollYProgress.on('change', (latest) => {
+      setScrollProgress(latest);
       // Map scroll progress to section index (0-8 for 9 sections)
       const section = Math.floor(latest * 9);
       setCurrentSection(section);
@@ -21,7 +25,7 @@ const ScrollContainer = ({ children }) => {
     <>
       {/* 3D Scene - Fixed Background */}
       <Scene3D 
-        scrollProgress={scrollYProgress.get()} 
+        scrollProgress={scrollProgress} 
         sectionIndex={currentSection}
       />
       
