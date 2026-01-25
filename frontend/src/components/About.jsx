@@ -3,6 +3,11 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { careerSummary } from '../data/mock';
+import { calculateYearsExperience } from "@/utils/experience";
+
+const yearsExperience = calculateYearsExperience(
+  careerSummary.careerStartDate
+);
 
 const About = () => {
   const ref = useRef(null);
@@ -44,8 +49,14 @@ const About = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            {careerSummary.stats.map((stat, index) => (
-              <motion.div
+            {careerSummary.stats.map((stat, index) => {
+
+                const value =
+                    stat.key === "experience"
+                      ? yearsExperience
+                      : stat.value;
+
+              return (<motion.div
                 key={index}
                 className="border-l-2 border-white pl-6"
                 initial={{ opacity: 0, x: -20 }}
@@ -56,7 +67,7 @@ const About = () => {
                   className="text-4xl font-bold text-white mb-2"
                   style={{ fontFamily: 'JetBrains Mono, monospace' }}
                 >
-                  {stat.value}
+                  {value}
                 </div>
                 <div
                   className="text-sm text-[#a0a0a0] uppercase tracking-wide"
@@ -64,8 +75,8 @@ const About = () => {
                 >
                   {stat.label}
                 </div>
-              </motion.div>
-            ))}
+              </motion.div>);
+            })}
           </motion.div>
         </div>
       </div>

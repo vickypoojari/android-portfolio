@@ -10,20 +10,32 @@ export const profileData = {
   linkedin: "https://linkedin.com/in/vickypoojari",
   github: "https://github.com/vickypoojari",
   website: "https://simplicated.in",
-  yearsOfExperience: 5.7,
+  yearsOfExperience: 6.4,
   tagline: "Building Android experiences that users love — from onCreate() to production, architecting scalable solutions with Kotlin, Jetpack Compose, and Clean Architecture.",
   resumeUrl: "https://customer-assets.emergentagent.com/job_senior-dev-journey/artifacts/ifrpnrg7_Vicky_Poojari_CV.pdf"
 };
 
+// mock.js
 export const careerSummary = {
+  careerStartDate: "2019-10-15", // <-- my career date
   narrative: "I started my Android journey with onCreate() and XML layouts, survived the AsyncTask era, and caught memory leaks before they became production ghosts. Over 5.7 years, I've evolved from verbose Java to expressive Kotlin, from XML to Jetpack Compose, and from monolithic apps to well-structured modular architectures. My work spans the entire development lifecycle — from crafting pixel-perfect UIs to optimizing CI/CD pipelines for smooth, timely releases. I focus on three things: performance, code quality, and shipping features that users actually love.",
   stats: [
-    { label: "Years Experience", value: "5.7" },
-    { label: "Apps Launched", value: "15+" },
-    { label: "Team Leadership", value: "Cross-functional" },
-    { label: "Bug Reduction", value: "70%" }
+    { key: "experience", label: "Years Experience" },
+    { key: "apps", label: "Apps Launched", value: "15+" },
+    { key: "leadership", label: "Team Leadership", value: "Cross-functional" },
+    { key: "bugs", label: "Bug Reduction", value: "70%" }
   ]
 };
+
+//export const careerSummary = {
+//  narrative: "",
+//  stats: [
+//    { label: "Years Experience", value: "6.4" },
+//    { label: "Apps Launched", value: "15+" },
+//    { label: "Team Leadership", value: "Cross-functional" },
+//    { label: "Bug Reduction", value: "70%" }
+//  ]
+//};
 
 export const skills = {
   languages: ["Kotlin", "Java", "Dart", "XML"],
@@ -56,10 +68,10 @@ export const projects = [
   },
   {
     id: 2,
-    name: "Menu Themes SDK",
+    name: "Menu Themes",
     company: "SmartQ",
-    problem: "Businesses needed the ability to customize kiosk UI/UX to match their branding without requiring separate app builds for each client.",
-    role: "Designed and architected an SDK that integrates with the Kiosk app, enabling dynamic theme customization and custom UI components.",
+    problem: "Businesses needed the ability to customize app UI/UX to match their branding without requiring separate app builds for each client.",
+    role: "Designed and architected an SDK that integrates with the app, enabling dynamic theme customization and custom UI components.",
     techStack: ["Flutter", "Dart", "Custom SDK Design", "Dynamic Theming", "Plugin Architecture"],
     solutions: [
       "Created a flexible SDK architecture supporting runtime theme injection",
